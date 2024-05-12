@@ -22,27 +22,29 @@
   </div>
   <!-- Add button -->
   <div id="add" class="hidden">
-    <div class="flex justify-center my-3 ">
-      <button onclick="handleAdd()">
-
+    <div class="flex justify-center my-3 gap-4">
+      <button class="px-3 py-2 bg-base-200 border rounded-xl" onclick="handleAdd()">
         ADD</button>
+      <button class="px-3 py-2 bg-base-200 border rounded-xl" onclick="handleSort()">Sort by date</button>
     </div>
   </div>
 
   <div id="toDoList" class="hidden">
 
   </div>
+
   <div id="addToDo" class="hidden w-3/4 mx-auto">
     <form onsubmit="handleAddToDo(event)" class="flex justify-center py-10 gap-3 ">
       <input class="border rounded-xl p-3" type="text" placeholder="Enter task name" name="task">
+      <input class="border rounded-xl p-3" type="date" placeholder="Enter task name" name="date">
       <input class="border p-3 rounded-xl" type="submit">
     </form>
   </div>
 
   <div id="editTodo" class="w-3/4 mx-auto">
-      
+
   </div>
-  
+
 
 
   <script src="index.js"></script>

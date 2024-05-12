@@ -26,8 +26,9 @@ function handleAdd() {
 function handleAddToDo(e) {
   e.preventDefault()
   const task = e.target.task.value;
+  const date = e.target.date.value
   const id = countLength()
-  const data = { id, task }
+  const data = { id, task, date }
   const existingData = getFromLS('user')
   existingData.push(data)
   localStorage.setItem('user', JSON.stringify(existingData))
@@ -60,11 +61,13 @@ function handleEditButton(targetId) {
   console.log('clicked', targetId)
   const allData = getFromLS()
   const task = allData[targetId]?.task;
+  const date = allData[targetId]?.date;
   editToDoContainer.innerHTML = ""
   const editToDoElement = document.createElement('div')
   editToDoElement.innerHTML = `
     <form onsubmit ="handleEdit(event, ${targetId})" class=" flex justify-center">
       <input class="border rounded-xl p-3" type="text" placeholder="Enter task name" value="${task}" name="task">
+      <input class="border rounded-xl p-3" type="text" placeholder="Enter task name" value="${date}" name="date">
       <button class="border p-3 rounded-xl">Update</button>
     </form>
   `
@@ -76,9 +79,11 @@ function handleEditButton(targetId) {
 function handleEdit(e, targetId) {
   e.preventDefault()
   const updatedTask = e.target.task.value;
+  const updatedDate = e.target.date.value;
   const allData = getFromLS();
   console.log(allData[targetId].task)
   allData[targetId].task = updatedTask;
+  allData[targetId].date = updatedDate;
   const updatedData = { allData }
   localStorage.setItem('user', JSON.stringify(allData))
   showData();
@@ -88,19 +93,36 @@ function handleEdit(e, targetId) {
 }
 
 
-function showData() {
+function handleSort(){
+  console.log("clicked")
+  showData(true)
+}
+
+
+function showData(sort) {
 
   const allData = getFromLS();
 
   const todoListContainer = document.getElementById('toDoList')
   todoListContainer.innerHTML = '';
 
-  allData.map(data => {
+  let displayData;
+
+  if(!sort){
+    displayData = [...allData];
+  }else{
+    displayData = allData.sort((a,b)=>{
+      return new Date(a.date) - new Date(b.date)
+    })
+  }
+
+  displayData.map(data => {
     const todoListElement = document.createElement('div');
 
     todoListElement.innerHTML = `<div class="flex justify-between gap-24 border w-2/3 mx-auto p-5">
     <div>
       <h1 class="font-semibold text-xl">${data.task}</h1>
+      <div class="flex gap-2"><p>complete by</p><h1 class="font-semibold text-base">${data.date}</h1></div>
     </div>
     <div class="flex flex-col gap-2">
       <button onclick="handleEditButton(${data.id})"><i class="fa-regular fa-pen-to-square"></i></button>
