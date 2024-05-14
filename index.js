@@ -99,7 +99,7 @@ function handleSort(){
 }
 
 
-function showData(sort) {
+function showData(sort,searchKeyword) {
 
   const allData = getFromLS();
 
@@ -116,6 +116,11 @@ function showData(sort) {
     })
   }
 
+  if(searchKeyword){
+    displayData = [...allData].filter(data=>{
+      return data.task.includes(searchKeyword)
+    })
+  }
   displayData.map(data => {
     const todoListElement = document.createElement('div');
 
@@ -133,3 +138,11 @@ function showData(sort) {
   })
 }
 showData()
+
+function handleSearch(e){
+  e.preventDefault()
+  const keyword = e.target.keyword.value;
+  console.log(keyword)
+  const sort = false;
+  showData(sort, keyword)
+}

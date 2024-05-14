@@ -26,6 +26,11 @@
       <button class="px-3 py-2 bg-base-200 border rounded-xl" onclick="handleAdd()">
         ADD</button>
       <button class="px-3 py-2 bg-base-200 border rounded-xl" onclick="handleSort()">Sort by date</button>
+      
+      <form onsubmit="handleSearch(event)">
+        <input type="text" class="py-2 border rounded-lg px-4" name="keyword" placeholder="Search">
+        <input class="px-3 py-2 bg-base-200 border rounded-xl"  type="submit" value="Search">
+      </form>
     </div>
   </div>
 
